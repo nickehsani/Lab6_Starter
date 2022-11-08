@@ -14,7 +14,8 @@ class RecipeCard extends HTMLElement {
     // A3. TODO - Create a style element - This will hold all of the styles for the Web Component
     let styleElement = document.createElement('style');
     // A4. TODO - Insert all of the styles from cardTemplate.html into the <style> element you just made
-    styleElement.textContent = `* {
+    styleElement.innerHTML = `
+    * {
       font-family: sans-serif;
       margin: 0;
       padding: 0;
@@ -91,8 +92,7 @@ class RecipeCard extends HTMLElement {
     }`;
 
     // A5. TODO - Append the <style> and <article> elements to the Shadow DOM
-    shadowDOM.append(styleElement);
-    shadowDOM.append(articleElement);
+    shadowDOM.append(styleElement, articleElement);
   }
 
   /**
@@ -121,42 +121,14 @@ class RecipeCard extends HTMLElement {
     if (!data) return;
 
     // A6. TODO - Select the <article> we added to the Shadow DOM in the constructor
-    const myShadowRoot = this.shadowRoot;
-    let myShadowArticle = myShadowRoot.querySelector('article');
+    const myShadowArticle = this.shadowRoot.querySelector('article');
+    //let myShadowArticle = myShadowRoot.querySelector('article');
 
     // A7. TODO - Set the contents of the <article> with the <article> template given in
     //           cardTemplate.html and the data passed in (You should only have one <article>,
     //           do not nest an <article> inside another <article>). You should use Template
     //           literals (tempalte strings) and element.innerHTML for this.
-    let mainImageSrc = "";
-    let altImageSrc = "";
-    switch(data.rating){
-      case 0:
-        mainImageSrc = "./assets/images/icons/0-star.svg";
-        altImageSrc = "0 stars";
-        break;
-      case 1:
-        mainImageSrc = "./assets/images/icons/1-star.svg";
-        altImageSrc = "1 star";
-        break;
-      case 2:
-        mainImageSrc = "./assets/images/icons/2-star.svg";
-        altImageSrc = "2 stars";
-        break;
-      case 3:
-        mainImageSrc = "./assets/images/icons/3-star.svg";
-        altImageSrc = "3 stars";
-        break;
-      case 4:
-        mainImageSrc = "./assets/images/icons/4-star.svg";
-        altImageSrc = "4 stars";
-        break;
-      case 5:
-        mainImageSrc = "./assets/images/icons/5-star.svg";
-        altImageSrc = "5 stars";
-        break;
-    }
-    myShadowArticle = `
+    myShadowArticle.innerHTML = `
     <img src= ${data.imgSrc}
     alt=${data.imgAlt}>
   <p class="title">
@@ -165,7 +137,7 @@ class RecipeCard extends HTMLElement {
   <p class="organization">${data.organization}</p>
   <div class="rating">
     <span>${data.rating}</span>
-    <img src=${mainImageSrc} alt=${altImageSrc}>
+    <img src= "./assets/images/icons/${data.rating}-star.svg" alt="${data.rating} stars">
     <span>${data.numRatings}</span>
   </div>
   <time>${data.lengthTime}</time>

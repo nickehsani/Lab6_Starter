@@ -24,7 +24,13 @@ function getRecipesFromStorage() {
   // A9. TODO - Complete the functionality as described in this function
   //           header. It is possible in only a single line, but should
   //           be no more than a few lines.
-  return JSON.parse(localStorage.getItem('recipes'));
+  let storedRecipes = JSON.parse(localStorage.getItem('recipes'));
+  if (storedRecipes == null){
+    return [];
+  }
+  else{
+    return storedRecipes;
+  }
 }
 
 /**
@@ -41,7 +47,7 @@ function addRecipesToDocument(recipes) {
   //            create a <recipe-card> element for each one, and populate
   //            each <recipe-card> with that recipe data using element.data = ...
   //            Append each element to <main>
-  if (recipes.length == NULL){ return; }  //avoid error if no local storage
+  if (recipes.length == null){ return; }  //avoid error if no local storage
   for (let i = 0; i < recipes.length; i++){  //loop through each of the recipes passed in array
     let recipeCard = document.createElement('recipe-card'); //created recipe-card element
     recipeCard.data = recipes[i]; //populate each recipe-card with element.data
@@ -76,7 +82,7 @@ function initFormHandler() {
 
   // Steps B4-B9 will occur inside the event listener from step B3
   // B4. TODO - Create a new FormData object from the <form> element reference above
-    const formData = new formData(formElement);
+    const formData = new FormData(formElement);
   // B5. TODO - Create an empty object (I'll refer to this object as recipeObject to
   //            make this easier to read), and then extract the keys and corresponding
   //            values from the FormData object and insert them into recipeObject
@@ -98,7 +104,7 @@ function initFormHandler() {
   });
 
   // B10. TODO - Get a reference to the "Clear Local Storage" button
-  let clrLocalStorage = doc.getElementsByTagName('button')[1];
+  let clrLocalStorage = document.getElementsByTagName('button')[1];
   // B11. TODO - Add a click event listener to clear local storage button
   clrLocalStorage.addEventListener("click", function() {
   // Steps B12 & B13 will occur inside the event listener from step B11
